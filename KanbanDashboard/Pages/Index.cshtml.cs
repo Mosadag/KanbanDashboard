@@ -110,8 +110,24 @@ namespace KanbanDashboard.Pages
 		public JsonResult OnPostUpdateTask(TaskItem model)
 		{
 			LoadInMemoryData();
+			UpdateCash();
+
+
 
 			return new JsonResult(new { Status = "OK" });
+		}
+
+		private void UpdateCash()
+		{
+			_cache.Remove("TaskStatus");
+			_cache.Remove("TaskList");
+			var cacheEntryOptions = new MemoryCacheEntryOptions()
+						 .SetSlidingExpiration(TimeSpan.FromSeconds(6000))
+						 .SetAbsoluteExpiration(TimeSpan.FromSeconds(360000))
+						 .SetPriority(CacheItemPriority.Normal)
+						 .SetSize(1024);
+			_cache.Set("TaskStatus", TaskStatus, cacheEntryOptions);
+			_cache.Set("TaskList", TaskList, cacheEntryOptions);
 		}
 	}
 }

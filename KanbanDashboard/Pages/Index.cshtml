@@ -131,8 +131,10 @@
 							$('input:hidden[name="__RequestVerificationToken"]').val());
 					},
 					success: function (response) {
-						alert(data);
-								Window.location.reload();
+
+						
+						location.reload();
+								
 					},
 					failure: function (response) {
 						alert(response);
