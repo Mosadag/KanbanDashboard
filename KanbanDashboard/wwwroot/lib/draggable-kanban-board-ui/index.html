@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Draggable Kanban Board Plugin Example</title>
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.0.0/css/ionicons.min.css" integrity="sha512-TW7f6IUZY6T33KWkBGUCipZP0PDXofUzxl7T+90vjO7PdE4NtgB5B0vP1mjmUZHuGFlXOo84648aT0mMxxViaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/flatly/bootstrap.min.css">
+ <link rel="stylesheet" href="css/kanban.min.css">
+
+</head>
+
+<body style="background:#fafafa"><div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+<li><a href="https://www.jqueryscript.net/time-clock/hijri-date-picker-bootstrap.html">Download This Plugin</a></li>
+<li><a href="https://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
+</ul><div id="carbon-block"></div>
+<div class="jquery-script-ads"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2783044520727903"
+     crossorigin="anonymous"></script>
+<!-- jQuery_demo -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2783044520727903"
+     data-ad-slot="2780937993"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div class="jquery-script-clear"></div>
+</div>
+</div> <div class="container" style="margin:150px auto"><h1>Draggable Kanban Board Plugin Example</h1>
+  <p class="lead">A tiny jquery plugin for creating a draggable kanban board with 2 or more columns.</p><div id="kanban"></div></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/kanban.min.js"></script>
+  <script>
+     $('#kanban').kanban({
+        titles: ['Task' , 'Estimate' , 'Complete' , 'Invoiced' , 'Paid'],
+        colours: ['#00aaff','#ff921d','#00ff40','#ffe54b','#8454ff'],
+        items: [
+            {
+                id: 1,
+                title: 'Test',
+                block: 'Task',
+                link: '[URL]',
+                link_text: 'TEST001',
+                footer: '<i class="ion-md-chatboxes"></i> 1 <div class="pull-right"><i class="ion-md-checkbox"></i> 1/4</div>'
+            },
+            {
+                id: 2,
+                title: 'Test 2',
+                block: 'Estimate',
+                footer: '<i class="ion-md-chatboxes"></i> 1 <div class="pull-right"><i class="ion-md-checkbox"></i> 1/4</div>'
+            },
+            {
+                id: 3,
+                title: 'Test 3',
+                block: 'Estimate',
+                footer: '<i class="ion-md-chatboxes"></i> 1 <div class="pull-right"><i class="ion-md-checkbox"></i> 1/4</div>'
+            },
+            {
+                id: 4,
+                title: 'Test 5',
+                block: 'Estimate',
+                footer: '<i class="ion-md-chatboxes"></i> 1 <div class="pull-right"><i class="ion-md-checkbox"></i> 1/4</div>'
+            },
+            {
+                id: 5,
+                title: 'Test 5',
+                block: 'Estimate',
+                footer: '<i class="ion-md-chatboxes"></i> 1 <div class="pull-right"><i class="ion-md-checkbox"></i> 1/4</div>'
+            },
+        ]
+    });
+  </script>
+  <script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1VDDWMRSTH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1VDDWMRSTH');
+</script>
+</body>
+</html>

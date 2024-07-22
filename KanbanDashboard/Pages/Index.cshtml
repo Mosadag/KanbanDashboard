@@ -1,0 +1,149 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row">
+	@Html.AntiForgeryToken()
+	@foreach (var item in Model.TaskStatus)
+	{
+		<div class="col-xl-4 col-lg-6 ">
+			<div class="panel panel-inverse ">
+				<div class="panel-heading">
+					<h4 class="panel-title">@item.StatusName</h4>
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+					</div>
+				</div>
+				<div id="div_data">
+					@foreach (var task in Model.TaskList.Where(s=>s.TaskStatusModelId==item.Id))
+					{
+						<a href="#" class="list-group-item d-flex draggable" data-Id="@task.Id" data-StatusId="@item.Id">
+							<div class="me-3 fs-16px">
+								<i class="far fa-question-circle text-gray-500 fa-fw"></i>
+							</div>
+							<div class="flex-fill">
+								<div class="fs-14px lh-12 mb-2px fw-bold text-dark">@task.Title</div>
+								<div class="mb-1 fs-12px">
+									<div class="text-gray-600 flex-1">@item.StatusName</div>
+								</div>
+							
+							</div>
+						</a>
+					}
+					@* Work around ^_^ *@
+
+					<a href="#" class="list-group-item d-flex draggable" data-Id="0" data-StatusId="@item.Id">
+						<div class="me-3 fs-16px">
+							<i class="far fa-question-circle text-gray-500 fa-fw"></i>
+						</div>
+						<div class="flex-fill">
+							<div class="fs-14px lh-12 mb-2px fw-bold text-dark">  </div>
+							<div class="mb-1 fs-12px">
+								<div class="text-gray-600 flex-1"> </div>
+							</div>
+
+						</div>
+					</a>
+
+					@* End of working around *@
+					
+				</div>
+			</div>
+		</div>
+	}
+	
+	
+</div>
+			
+
+@section Scripts {
+    <script src="~/lib/jquery-ui-dist/jquery-ui.js"></script>
+    <script src="~/lib/jquery-ui-dist/jquery-ui.min.js"></script>
+	<script>
+		jQuery(document).ready(function () {
+
+
+			drag();
+			$("#div_data a")
+				.mouseover(function () {
+
+					ci = jQuery(this).parent().children().index(this);
+
+					ri = jQuery(this).parent().parent().children().index(this.parentNode);
+				}).mouseup(function () {
+					alert('mouseup');
+					console.log('data-StatusId; ' + jQuery(this).attr('data-StatusId'));
+					console.log('data-Id; ' + jQuery(this).attr('data-Id'));
+				})
+				.click(function () {
+					//console.log(ri);
+					// console.log('data-StatusId; ' + jQuery(this).attr('data-StatusId'));
+					// console.log('data-Id; ' + jQuery(this).attr('data-Id'));
+					var ri2 = jQuery(this).parent().parent().children().index(this.parentNode);
+					alert(ri2);
+				}).droppable({
+					accept: ".draggable",
+					drop: function (event, ui) {
+						// alert('drop');
+						// console.log('data-StatusId drop; ' + jQuery(this).attr('data-StatusId'));
+						// console.log('data-Id drop; ' + jQuery(this).attr('data-Id'));
+						var itemId = jQuery(this).attr('data-Id');
+						var statusId = jQuery(this).attr('data-StatusId');
+						UpdateItem(itemId, statusId, 1);
+						//	jQuery(ui.draggable).remove();
+						//drag();
+						// var ci_ = jQuery(this).parent().children().index(this);
+						// var ri_ = jQuery(this).parent().parent().children().index(this.parentNode);
+						// console.log('data-parent drop; ' + jQuery(this).parent().children().attr('data-StatusId'));
+						// console.log('data-parent ri_ drop; ' + ri_);
+					}
+				});
+
+			function drag() {
+				jQuery(".draggable").draggable({
+					revert: true,
+					start: function () {
+						//this.style.zIndex = 5;
+					}
+				})
+			}
+			function UpdateItem(itemId, statusId, orderId) {
+				//alert(Id);
+
+				$.ajax({
+					type: "POST",
+					url: "?handler=UpdateTask",
+					data: {
+						Id: itemId,
+						TaskStatusModelId: statusId,
+						OrderId: orderId
+
+					},
+					//contentType: "application/json",
+					//dataType: "json",
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("RequestVerificationToken",
+							$('input:hidden[name="__RequestVerificationToken"]').val());
+					},
+					success: function (response) {
+						alert(data);
+								Window.location.reload();
+					},
+					failure: function (response) {
+						alert(response);
+					}
+				});
+
+
+
+			}
+		})
+
+	</script>
+	 
+}
