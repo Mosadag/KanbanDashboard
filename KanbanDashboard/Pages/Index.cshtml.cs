@@ -110,6 +110,11 @@ namespace KanbanDashboard.Pages
 		public JsonResult OnPostUpdateTask(TaskItem model)
 		{
 			LoadInMemoryData();
+			var item = TaskList.FirstOrDefault(s => s.Id == model.Id);
+			if (item != null)
+			{
+				item.TaskStatusModelId = model.TaskStatusModelId;
+			}
 			UpdateCash();
 
 

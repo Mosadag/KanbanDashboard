@@ -3,7 +3,19 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+<head>
+	<style>
+		.stack {
+			width: 300px;
+			border: 1px dashed #ccc;
+			background-color: #f5f5f5;
+			margin: 10px;
+			float: left;
+			**z-index:500;
+			**
+		}
+	</style>
+</head>
 <div class="row">
 	@Html.AntiForgeryToken()
 	@foreach (var item in Model.TaskStatus)
@@ -22,7 +34,7 @@
 				<div id="div_data">
 					@foreach (var task in Model.TaskList.Where(s=>s.TaskStatusModelId==item.Id))
 					{
-						<a href="#" class="list-group-item d-flex draggable" data-Id="@task.Id" data-StatusId="@item.Id">
+						<a href="#" class="list-group-item d-flex draggable stack" data-Id="@task.Id" data-StatusId="@item.Id">
 							<div class="me-3 fs-16px">
 								<i class="far fa-question-circle text-gray-500 fa-fw"></i>
 							</div>
@@ -37,7 +49,7 @@
 					}
 					@* Work around ^_^ *@
 
-					<a href="#" class="list-group-item d-flex draggable" data-Id="0" data-StatusId="@item.Id">
+					<a href="#" class="list-group-item d-flex  stack" data-Id="0" data-StatusId="@item.Id">
 						<div class="me-3 fs-16px">
 							<i class="far fa-question-circle text-gray-500 fa-fw"></i>
 						</div>
@@ -67,7 +79,8 @@
 	<script>
 		jQuery(document).ready(function () {
 
-
+			var OrgLocationId = 0;
+			self = this;
 			drag();
 			$("#div_data a")
 				.mouseover(function () {
@@ -76,11 +89,13 @@
 
 					ri = jQuery(this).parent().parent().children().index(this.parentNode);
 				}).mouseup(function () {
-					alert('mouseup');
+					//alert('mouseup');
 					console.log('data-StatusId; ' + jQuery(this).attr('data-StatusId'));
 					console.log('data-Id; ' + jQuery(this).attr('data-Id'));
+					self.OrgLocationId = jQuery(this).attr('data-Id');
 				})
 				.click(function () {
+					
 					//console.log(ri);
 					// console.log('data-StatusId; ' + jQuery(this).attr('data-StatusId'));
 					// console.log('data-Id; ' + jQuery(this).attr('data-Id'));
@@ -89,12 +104,15 @@
 				}).droppable({
 					accept: ".draggable",
 					drop: function (event, ui) {
-						// alert('drop');
-						// console.log('data-StatusId drop; ' + jQuery(this).attr('data-StatusId'));
-						// console.log('data-Id drop; ' + jQuery(this).attr('data-Id'));
+						
+						// var itemId = jQuery(this).attr('data-Id');
+						// var statusId = jQuery(this).attr('data-StatusId');
+
 						var itemId = jQuery(this).attr('data-Id');
-						var statusId = jQuery(this).attr('data-StatusId');
-						UpdateItem(itemId, statusId, 1);
+						var statusId = jQuery(this).parent().children().attr('data-StatusId');
+						console.log("itemId= " + self.OrgLocationId);
+						console.log("statusId= " + statusId);
+						UpdateItem(self.OrgLocationId, statusId, 1);
 						//	jQuery(ui.draggable).remove();
 						//drag();
 						// var ci_ = jQuery(this).parent().children().index(this);
@@ -107,8 +125,12 @@
 			function drag() {
 				jQuery(".draggable").draggable({
 					revert: true,
-					start: function () {
-						//this.style.zIndex = 5;
+					start: function (e) {
+						//alert("element");
+						//jQuery(this).css('z-index', 0)
+					},
+					stop: function () {
+						$('element').css('z-index', -1)
 					}
 				})
 			}
