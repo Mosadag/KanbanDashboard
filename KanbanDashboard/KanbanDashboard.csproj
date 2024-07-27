@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Hani\Lib\jkanban\jkanban-master\.github\FUNDING.yml" />
+  </ItemGroup>
+
 </Project>
