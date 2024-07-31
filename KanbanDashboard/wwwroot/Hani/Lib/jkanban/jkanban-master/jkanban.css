@@ -1,159 +1,221 @@
-.kanban-container {
-  position: relative;
-  box-sizing: border-box;
-  width: auto;
+.app-kanban .kanban-wrapper {
+    width: 100%;
+    height: calc(100vh - 12rem);
+    overflow-x: auto;
+    overflow-y: auto
 }
 
-.kanban-container * {
-  box-sizing: border-box;
+@media(min-width: 1200px) {
+    .layout-horizontal .app-kanban .kanban-wrapper {
+        height: calc(100vh - 12rem - 3.5rem)
+    }
 }
 
-.kanban-container:after {
-  clear: both;
-  display: block;
-  content: "";
+.app-kanban .kanban-wrapper .kanban-container {
+    display: flex;
+    width: max-content !important
 }
 
-.kanban-board {
-  position: relative;
-  float: left;
-  background: #e2e4e6;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    .app-kanban .kanban-wrapper .kanban-container .kanban-board {
+        width: auto !important;
+        height: 100%;
+        background: rgba(0,0,0,0)
+    }
+
+        .app-kanban .kanban-wrapper .kanban-container .kanban-board:focus {
+            outline: 0
+        }
+
+        .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-board-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0 1rem 0
+        }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-board-header .kanban-title-board {
+                font-size: 1.125rem;
+                font-weight: 500;
+                max-width: 13rem;
+                white-space: nowrap;
+                overflow: hidden
+            }
+
+                .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-board-header .kanban-title-board:focus {
+                    outline: 0
+                }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-board-header .btn-default.btn:active {
+                border-color: rgba(0,0,0,0)
+            }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-board-header .dropdown .dropdown-toggle:after {
+                display: none
+            }
+
+        .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-drag {
+            min-height: 1rem;
+            min-width: 16.25rem;
+            padding: 0
+        }
+
+        .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-title-button {
+            position: absolute;
+            left: -6px;
+            bottom: 0;
+            margin: -2rem 0
+        }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-title-button:focus {
+                box-shadow: none
+            }
+
+        .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 16.25rem;
+            padding: 1.25rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: .5rem
+        }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-item .kanban-tasks-item-dropdown {
+                display: none;
+                position: absolute;
+                right: .75rem;
+                cursor: pointer
+            }
+
+                .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-item .kanban-tasks-item-dropdown .dropdown-toggle:after {
+                    display: none
+                }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-item:hover {
+                box-shadow: rgba(0,0,0,.1) 0 4px 20px 0
+            }
+
+                .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-item:hover .kanban-tasks-item-dropdown {
+                    display: block
+                }
+
+            .app-kanban .kanban-wrapper .kanban-container .kanban-board .kanban-item .kanban-text {
+                font-size: .9375rem
+            }
+
+.app-kanban .kanban-add-new-board {
+    float: left;
+    padding: 0 .75rem
 }
 
-.kanban-board.disabled-board {
-  opacity: 0.3;
+    .app-kanban .kanban-add-new-board .kanban-add-board-btn {
+        padding-bottom: 1rem
+    }
+
+    .app-kanban .kanban-add-new-board label {
+        font-size: 1.125rem;
+        font-weight: 500;
+        margin-bottom: 0;
+        cursor: pointer
+    }
+
+.app-kanban .kanban-update-item-sidebar {
+    text-align: left
 }
 
-.kanban-board.is-moving.gu-mirror {
-  transform: rotate(3deg);
+    .app-kanban .kanban-update-item-sidebar .comment-editor.ql-container {
+        border-top-left-radius: .375rem;
+        border-top-right-radius: .375rem
+    }
+
+    .app-kanban .kanban-update-item-sidebar .comment-editor .ql-editor {
+        min-height: 7rem;
+        background: unset
+    }
+
+    .app-kanban .kanban-update-item-sidebar .comment-toolbar.ql-toolbar {
+        width: 100%;
+        text-align: right;
+        border-top: 0;
+        border-bottom-right-radius: .375rem;
+        border-bottom-left-radius: .375rem;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0
+    }
+
+.kanban-board.gu-mirror .kanban-board-header .dropdown {
+    display: none
+}
+
+.kanban-board.gu-mirror .kanban-item .kanban-tasks-item-dropdown .dropdown-toggle:after {
+    display: none
+}
+
+.kanban-item.gu-mirror .kanban-tasks-item-dropdown .dropdown-toggle:after {
+    display: none
 }
 
 .kanban-board.is-moving.gu-mirror .kanban-drag {
-  overflow: hidden;
-  padding-right: 50px;
+    padding-right: 20px;
+    width: 100%
 }
 
-.kanban-board header {
-  font-size: 16px;
-  padding: 15px;
+.light-style .app-kanban .kanban-board .kanban-board-header {
+    color: #433c50
 }
 
-.kanban-board header .kanban-title-board {
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-  display: inline;
+.light-style .app-kanban .kanban-board .kanban-item {
+    background-color: #fff;
+    box-shadow: 0 .25rem .625rem rgba(46,38,61,.2)
 }
 
-.kanban-board header .kanban-title-button {
-  float: right;
+    .light-style .app-kanban .kanban-board .kanban-item .kanban-text {
+        color: #433c50
+    }
+
+.light-style .app-kanban .kanban-add-new-board label {
+    color: #433c50
 }
 
-.kanban-board .kanban-drag {
-  min-height: 200px;
-  padding: 20px;
+.dark-style .app-kanban .kanban-board .kanban-board-header {
+    color: #d5d1ea
 }
 
-.kanban-board:after {
-  clear: both;
-  display: block;
-  content: "";
+.dark-style .app-kanban .kanban-board .kanban-item {
+    background-color: #312d4b;
+    box-shadow: 0 .25rem .625rem rgba(19,17,32,.24)
 }
 
-.kanban-item {
-  background: #fff;
-  padding: 15px;
-  margin-bottom: 20px;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  animation: append-animate 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    .dark-style .app-kanban .kanban-board .kanban-item .kanban-text {
+        color: #d5d1ea
+    }
+
+.dark-style .app-kanban .kanban-add-new-board label {
+    color: #d5d1ea
 }
 
-@keyframes append-animate {
-	from {
-		transform: translateY(-20px);
-	}
-	to {
-		transform: translateY(0px);
-	}
+.dark-style .kanban-item.gu-mirror {
+    background-color: #312d4b
 }
 
-.kanban-item:hover {
-  cursor: move;
+[dir=rtl] .app-kanban .kanban-board, [dir=rtl] .app-kanban .kanban-add-new-btn {
+    float: right
 }
 
-.kanban-item:last-child {
-  margin: 0;
+    [dir=rtl] .app-kanban .kanban-board .kanban-board-header .kanban-title-button {
+        left: auto !important;
+        right: -8px
+    }
+
+    [dir=rtl] .app-kanban .kanban-board .kanban-tasks-item-dropdown {
+        left: 1.2rem;
+        right: auto !important
+    }
+
+[dir=rtl] .app-kanban .kanban-update-item-sidebar {
+    text-align: right
 }
 
-.kanban-item.is-moving.gu-mirror {
-  transform: rotate(3deg);
-  height: auto !important;
-}
-
-/* Dragula CSS  */
-.gu-mirror {
-  position: fixed !important;
-  margin: 0 !important;
-  z-index: 9999 !important;
-}
-
-.gu-hide {
-  display: none !important;
-}
-
-.gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-
-.gu-transit {
-  opacity: 0.2 !important;
-  transform: rotate(0deg) !important;
-}
-
-.drag_handler {
-    background: #fff;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    position: relative;
-    float: left;
-    top: -3px;
-    margin-right: 4px;
-}
-
-.drag_handler:hover {
-  cursor: move;
-}
-
-.drag_handler_icon {
-    position: relative;
-    display: block;
-    background: #000;
-    width: 24px;
-    height: 2px;
-    top: 12px;
-    transition: .5s ease-in-out;
-}
-
-.drag_handler_icon:before,
-.drag_handler_icon:after {
-    background: #000;
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    transition: .5s ease-in-out;
-}
-
- .drag_handler_icon:before {
-    top: 6px;
-}
-
-.drag_handler_icon:after {
-    bottom: 6px;
-}
+    [dir=rtl] .app-kanban .kanban-update-item-sidebar .comment-toolbar.ql-toolbar {
+        text-align: right
+    }
