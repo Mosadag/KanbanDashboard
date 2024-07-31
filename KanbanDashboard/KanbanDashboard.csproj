@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\TaskItem.cs" />
+    <Compile Remove="Models\TaskStatusModel.cs" />
+    <Compile Remove="Pages\Index.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Hani\Lib\jkanban\jkanban-master\.github\FUNDING.yml" />
   </ItemGroup>
 
