@@ -49,7 +49,7 @@ namespace KanbanDashboard.Pages
                 {
                     Id = "board-in-progress",
                     Title = "In Progress",
-                    TaskList = new List<TaskModel>
+                    item = new List<TaskModel>
     {
        new TaskModel
        {
@@ -77,7 +77,7 @@ namespace KanbanDashboard.Pages
                 {
                     Id = "board-in-review",
                     Title = "In Review",
-                    TaskList = new List<TaskModel>
+                    item = new List<TaskModel>
     {
        new TaskModel
        {
@@ -128,7 +128,16 @@ namespace KanbanDashboard.Pages
 
             return new JsonResult(new { Status = "OK" });
         }
+        public JsonResult OnGetLoadData()
+        {
+            LoadInMemoryData();
+            return new JsonResult(StagesModelList);
+        }
 
+        public JsonResult OnGetAddThanks(TaskModel model)
+        {
+            return new JsonResult("OK");
+        }
         private void UpdateCash()
         {
             _cache.Remove("TaskStatus");
@@ -141,5 +150,7 @@ namespace KanbanDashboard.Pages
             _cache.Set("TaskStatus", StagesModelList, cacheEntryOptions);
             _cache.Set("TaskList", TasklList, cacheEntryOptions);
         }
+
+
     }
 }
