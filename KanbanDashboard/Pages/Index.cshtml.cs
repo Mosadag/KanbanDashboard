@@ -5,9 +5,9 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace KanbanDashboard.Pages
 {
-    public class IndexWithThemModel : PageModel
+    public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexWithThemModel> _logger;
+        private readonly ILogger<IndexModel> _logger;
         [BindProperty]
         public List<StagesModel>? StagesModelList { get; set; }
         [BindProperty]
@@ -17,7 +17,7 @@ namespace KanbanDashboard.Pages
         private IMemoryCache _cache;
 
 
-        public IndexWithThemModel(ILogger<IndexWithThemModel> logger, IMemoryCache memoryCache)
+        public IndexModel(ILogger<IndexModel> logger, IMemoryCache memoryCache)
         {
             _logger = logger;
             _cache = memoryCache;
