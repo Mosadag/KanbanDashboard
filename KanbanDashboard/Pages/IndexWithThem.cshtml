@@ -250,7 +250,7 @@
                     footer: false // position the button on footer
                 },
                 click: function (el) {
-                    alert('Add??');
+                  
                     let element = el;
                    
                     let title = element.getAttribute('data-eid')
@@ -274,7 +274,7 @@
 
                     // ! Using jQuery method to get sidebar due to select2 dependency
                     $('.kanban-update-item-sidebar').find(select2).val(label).trigger('change');
-                    alert();
+                    alert('Update');
                     // Remove & Update assigned
                     kanbanSidebar.querySelector('.assigned').innerHTML = '';
                     kanbanSidebar
@@ -287,7 +287,51 @@
                             '</div>'
                         );
                 },
-                dragendEl: function (el) { alert(); },
+                
+                dropEl: function (el, target, source, sibling) {
+                    var sourceId = $(source).closest("div.kanban-board").attr("data-id"),
+                        targetId = $(target).closest("div.kanban-board").attr("data-id");
+                    var taskId = el.getAttribute('data-eid');
+                    // console.log('sourceId '+sourceId);
+                    // console.log('targetId  '+targetId);
+                    // console.log('taskId  ' + taskId);
+                    $.ajax({
+                        type: "Get",
+                        url: "?handler=UpdateTaskLocation",
+                        data: {
+                            SourceId: sourceId,
+                            TargetId: targetId,
+                            TaskId: taskId
+
+                        },
+                        //contentType: "application/json",
+                        //dataType: "json",
+                        contentType: "application/json",
+                        dataType: 'application/json; charset=utf-8',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        success: function (response) {
+
+
+
+
+                        },
+                        complete: function (jqXHR) { location.reload(); },
+                        failure: function (response) {
+                            alert(response);
+                            return;
+                        }
+                    });
+
+                    if (source === target) {
+                        // same column
+                    } else {
+                        // different column
+                    }
+                },
+                dragendBoard: function (el) { alert('2'); },
                 buttonClick: function (el, boardId) {
                     //alert('click on add new item');
 
@@ -329,8 +373,9 @@
                             type: "Get",
                             url: "?handler=AddThanks",
                             data: {
-                                Title: 'fdfds',
-                                Id: '2'
+                                Title: e.target[0].value,
+                                Id: boardId + '-' + currentBoard.length + 1,
+                                StagesId: boardId
 
                             },
                             //contentType: "application/json",
@@ -343,10 +388,11 @@
                             },
                             success: function (response) {
 
-
-                                alert('Add it');
+                               
+                             
 
                             },
+                            complete: function (jqXHR) { location.reload(); },
                             failure: function (response) {
                                 alert(response);
                                 return;
@@ -355,8 +401,9 @@
                         kanban.addElement(boardId, {
                             title: "<span class='kanban-text'>" + e.target[0].value + '</span>',
                             id: boardId + '-' + currentBoard.length + 1
+                                
                         });
-
+                       
                         // add dropdown in new boards
                         const kanbanText = [].slice.call(
                             document.querySelectorAll('.kanban-board[data-id=' + boardId + '] .kanban-text')
@@ -376,10 +423,13 @@
                         }
 
                         // delete tasks for new boards
+                       
                         const deleteTask = [].slice.call(
+                         
                             document.querySelectorAll('.kanban-board[data-id=' + boardId + '] .delete-task')
                         );
                         deleteTask.forEach(function (e) {
+                         
                             e.addEventListener('click', function () {
                                 const id = this.closest('.kanban-item').getAttribute('data-eid');
                                 kanban.removeElement(id);
@@ -490,6 +540,7 @@
             // To delete Board for rendered boards
             const deleteBoards = [].slice.call(document.querySelectorAll('.delete-board'));
             if (deleteBoards) {
+
                 deleteBoards.forEach(function (elem) {
                     elem.addEventListener('click', function () {
                         const id = this.closest('.kanban-board').getAttribute('data-id');
@@ -501,10 +552,38 @@
             // Delete task for rendered boards
             const deleteTask = [].slice.call(document.querySelectorAll('.delete-task'));
             if (deleteTask) {
+               
                 deleteTask.forEach(function (e) {
                     e.addEventListener('click', function () {
                         const id = this.closest('.kanban-item').getAttribute('data-eid');
-                        kanban.removeElement(id);
+                        //kanban.removeElement(id);
+                        alert('delete');
+                        $.ajax({
+                            type: "Get",
+                            url: "?handler=DelteTask",
+                            data: {
+                                Id: id
+                            },
+                            //contentType: "application/json",
+                            //dataType: "json",
+                            contentType: "application/json",
+                            dataType: 'application/json; charset=utf-8',
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("RequestVerificationToken",
+                                    $('input:hidden[name="__RequestVerificationToken"]').val());
+                            },
+                            success: function (response) {
+
+
+                             
+
+                            },
+                            complete: function (jqXHR) { location.reload(); },
+                            failure: function (response) {
+                                alert(response);
+                                return;
+                            }
+                        });
                     });
                 });
             }

@@ -136,6 +136,13 @@ namespace KanbanDashboard.Pages
 
         public JsonResult OnGetAddThanks(TaskModel model)
         {
+            LoadInMemoryData();
+            var entity = StagesModelList.FirstOrDefault(s => s.Id == model.StagesId);
+            if (entity != null)
+            {
+                entity.item.Add(model);
+            }
+            UpdateCash();
             return new JsonResult("OK");
         }
         private void UpdateCash()
@@ -149,6 +156,41 @@ namespace KanbanDashboard.Pages
                          .SetSize(1024);
             _cache.Set("TaskStatus", StagesModelList, cacheEntryOptions);
             _cache.Set("TaskList", TasklList, cacheEntryOptions);
+        }
+
+        public JsonResult OnGetDelteTask(string Id)
+        {
+            LoadInMemoryData();
+            foreach (var item in StagesModelList)
+            {
+                var entity = item.item.FirstOrDefault(s => s.Id == Id);
+                if (entity != null)
+                {
+                    item.item.Remove(entity);
+                    UpdateCash();
+                    return new JsonResult(new { Status = "Ok" });
+                }
+            }
+            return new JsonResult(new { Status = "NotFound" });
+        }
+
+        public JsonResult OnGetUpdateTaskLocation(TaskChangeLocation model)
+        {
+            LoadInMemoryData();
+            var entity = StagesModelList.FirstOrDefault(s => s.Id == model.SourceId);
+            if (entity != null)
+            {
+                var task = entity.item.FirstOrDefault(s => s.Id == model.TaskId);
+                entity.item.Remove(task);
+                task.StagesId = model.TargetId;
+                var Newentity = StagesModelList.FirstOrDefault(s => s.Id == model.TargetId);
+                if (Newentity != null)
+                {
+                    Newentity.item.Add(task);
+                }
+                UpdateCash();
+            }
+            return new JsonResult("OK");
         }
 
 

@@ -9,6 +9,7 @@
     public class TaskModel
     {
         public string Id { get; set; }
+        public string StagesId { get; set; }
         public string Title { get; set; }
         public string? Comments { get; set; }
 
@@ -22,5 +23,12 @@
         public List<string>? Assigned { get; set; }
         public List<string>? Members { get; set; }
         public string? Image { get; set; }
+    }
+    public class TaskChangeLocation
+    {
+        public string SourceId { get; set; }
+        public string TargetId { get; set; }
+        public string TaskId { get; set; }
+
     }
 }
